@@ -9,14 +9,15 @@ import numpy
 
 
 if __name__ == '__main__':
-    filename = 'train_data/questions_mod.csv'
+    import sys
+    filename = sys.argv[1]
     
     import create_feature
     questions = create_feature.load_train_data(filename)
-    label = create_feature.questions2labels(questions, class_type='class')
+    label = create_feature.questions2labels(questions)
     data = create_feature.questions2dfvector(questions)
     print "number of labels: %d" % len(list(set(label)))
-    print "number of data: %d" % len(label)    
+    print "number of data: %d" % len(label)
     
     # cross validation
     from sklearn import cross_validation

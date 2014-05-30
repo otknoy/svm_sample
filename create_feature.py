@@ -26,9 +26,10 @@ def tokenizer(s):
         if basic_form == '*':
             basic_form = node.surface
 
-        # noun_id_list = range(36, 67+1)
-        # if node.posid in noun_id_list:
-        #     terms.append(basic_form)
+        noun_id_list = range(36, 67+1)
+        if node.posid in noun_id_list:
+            terms.append(basic_form)
+
         terms.append(basic_form)
         node = node.next
     return terms[1:-1]
@@ -49,12 +50,10 @@ def ngram(terms, n=2):
         i += 1
     return ret
 
-def questions2labels(questions, class_type='subclass'):
-    if class_type == 'class':
-        labels = numpy.array([l/10 for l, q in questions])
-    elif class_type == 'subclass':
-        labels = numpy.array([l for l, q in questions])
+def questions2labels(questions):
+    labels = numpy.array([l for l, q in questions])
     return labels
+
     
 def questions2dfvector(questions):
     tf_list = []
