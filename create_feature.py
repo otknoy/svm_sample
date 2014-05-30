@@ -26,6 +26,7 @@ def tokenizer(s):
         if basic_form == '*':
             basic_form = node.surface
 
+        # extract noun
         noun_id_list = range(36, 67+1)
         if node.posid in noun_id_list:
             terms.append(basic_form)
@@ -53,7 +54,6 @@ def ngram(terms, n=2):
 def questions2labels(questions):
     labels = numpy.array([l for l, q in questions])
     return labels
-
     
 def questions2dfvector(questions):
     tf_list = []
