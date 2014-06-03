@@ -19,12 +19,12 @@ if __name__ == '__main__':
     print "number of labels: %d" % len(list(set(label)))
     print "number of data: %d" % len(label)
     
-    # cross validation
+    # split data for cross validation
     from sklearn import cross_validation
     skf = cross_validation.StratifiedKFold(label, n_folds=5)
-    # kf = cross_validation.KFold(len(data), n_folds=10)    
 
-    prf = []
+    all_label_test = []
+    all_label_predict = []
     for train_index, test_index in skf:
         # split train and test
         data_train, data_test = data[train_index], data[test_index]
@@ -39,18 +39,13 @@ if __name__ == '__main__':
         # predict
         label_predict = estimator.predict(data_test)
 
-        # estimate
-        print confusion_matrix(label_test, label_predict)
-        print classification_report(label_test, label_predict)
-        p, r, f, s = precision_recall_fscore_support(label_test, label_predict, average='weighted')
-        print p, r, f, s
-        prf.append([p, r, f])
+        # save results
+        all_label_test += list(label_test)
+        all_label_predict += list(label_predict)
+        
 
-
+    # evaluate
     print 
-    matrix = numpy.matrix(prf).T
-    print 'averaege'
-    print "precision:\t%f" % numpy.average(matrix[0])
-    print "recall:\t\t%f" % numpy.average(matrix[1])
-    print "fscore:\t\t%f" % numpy.average(matrix[2])
+    print confusion_matrix(all_label_test, all_label_predict)
+    print classification_report(all_label_test, all_label_predict)
         
