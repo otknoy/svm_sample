@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-from sklearn.datasets import load_digits
 from sklearn.cross_validation import train_test_split
+from sklearn.cross_validation import StratifiedKFold
 from sklearn.svm import SVC
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
@@ -20,8 +20,7 @@ if __name__ == '__main__':
     print "number of data: %d" % len(label)
     
     # split data for cross validation
-    from sklearn import cross_validation
-    skf = cross_validation.StratifiedKFold(label, n_folds=5)
+    skf = StratifiedKFold(label, n_folds=5)
 
     all_label_test = []
     all_label_predict = []
